@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -41,6 +42,18 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var Ad[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="user")
+     */
+    private $ads;
+
+    public function __construct()
+    {
+        $this->ads = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -142,5 +155,21 @@ class User implements UserInterface
     public function setFullName($fullName): void
     {
         $this->fullName = $fullName;
+    }
+
+    /**
+     * @return Ad[]
+     */
+    public function getAds(): array
+    {
+        return $this->ads;
+    }
+
+    /**
+     * @param Ad[] $ads
+     */
+    public function setAds(array $ads): void
+    {
+        $this->ads = $ads;
     }
 }

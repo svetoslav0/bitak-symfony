@@ -39,7 +39,6 @@ class UserService implements UserServiceInterface
     private function initUser(User $user): User {
         $passwordHash = $this->encryptionService->encrypt($user->getPassword());
         $user->setPassword($passwordHash);
-        $user->addRole('ROLE_ADMIN');
 
         return $user;
     }

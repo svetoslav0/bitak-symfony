@@ -39,13 +39,14 @@ class AdController extends AbstractController
      * @Route("/ad/create", name="create_ad_process", methods={"POST"})
      *
      * @param Request $request
+     * @return Response
      */
     public function createProcess(Request $request) {
         $ad = new Ad();
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
 
-        $this->adService->save($ad);
+        $this->adService->save($ad, $this->getUser());
 
         return $this->redirectToRoute('home');
     }

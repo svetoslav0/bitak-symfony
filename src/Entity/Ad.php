@@ -63,6 +63,13 @@ class Ad
      */
     private $status;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ads")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,5 +181,21 @@ class Ad
     public function setStatus(AdStatus $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
