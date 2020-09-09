@@ -24,6 +24,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $fullName;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -73,6 +78,17 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    public function addRole(string $role): self
+    {
+        $roles = $this->roles;
+        $roles[] = $role;
+
+        $roles = array_unique($roles);
+        $this->setRoles($roles);
+
+        return $this;
+    }
+
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -110,5 +126,21 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param mixed $fullName
+     */
+    public function setFullName($fullName): void
+    {
+        $this->fullName = $fullName;
     }
 }

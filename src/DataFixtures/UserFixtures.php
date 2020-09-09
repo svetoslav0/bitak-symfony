@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture
 {
     const DEFAULT_USER = 'admin@dir.bg';
+    const DEFAULT_NAME = 'Admin';
     const DEFAULT_PASSWORD = 'admin';
 
     private $encoder;
@@ -26,6 +27,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setEmail(self::DEFAULT_USER);
         $user->setPassword($this->encoder->encodePassword($user, self::DEFAULT_PASSWORD));
+        $user->setFullName(self::DEFAULT_NAME);
         $manager->persist($user);
 
         $manager->flush();

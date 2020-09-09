@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <form class="form" method="post">
+        <h3>Register</h3>
+        <label>
+            <p class="label-txt">ENTER YOUR EMAIL</p>
+            <input type="text" name="user[email]" class="form-control" />
+            <div class="line-box">
+                <div class="line"></div>
+            </div>
+        </label>
+        <label>
+            <p class="label-txt">ENTER YOUR PASSWORD</p>
+            <input type="password" name="user[password]" class="form-control" />
+            <div class="line-box">
+                <div class="line"></div>
+            </div>
+        </label>
+        <label>
+            <p class="label-txt">ENTER YOUR FULL NAME</p>
+            <input type="text" name="user[fullName]" class="form-control" />
+            <div class="line-box">
+                <div class="line"></div>
+            </div>
+        </label>
+        <button type="submit">Register</button>
+    </form>
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
