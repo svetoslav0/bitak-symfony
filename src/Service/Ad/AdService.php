@@ -66,4 +66,13 @@ class AdService implements AdServiceInterface
 
         return $this->adRepository->findBy(['status' => $statusWaiting]);
     }
+
+    /**
+     * @param int $id
+     * @return Ad
+     */
+    public function getById(int $id): Ad
+    {
+        return $this->adRepository->find($id);
+    }
 }

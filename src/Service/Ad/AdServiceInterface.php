@@ -20,4 +20,10 @@ interface AdServiceInterface
      * @return Ad[]
      */
     public function getWaiting(): array;
+
+    /**
+     * @param int $id
+     * @return Ad
+     */
+    public function getById(int $id): Ad;
 }

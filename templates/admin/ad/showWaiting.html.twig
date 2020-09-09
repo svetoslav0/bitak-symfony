@@ -4,7 +4,11 @@
 
     {% for ad in ads %}
         <div>
-            <span>{{ ad.title }}</span> |
+            <span>
+                <a href="{{ path('show_candidate_ad', {id: ad.id}) }}">
+                    {{ ad.title }}
+                </a>
+            </span> |
             <span>{{ ad.city.name }}</span> |
             <span>{{ ad.category.name }}</span> |
             <span>{{ ad.user.email }}</span>

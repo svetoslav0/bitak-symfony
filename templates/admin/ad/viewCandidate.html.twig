@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ad Details</h1>
+    <h2>{{ ad.title }}</h2>
+    <small>{{ ad.user.email }}</small>
+    <div>{{ ad.description }}</div>
+    <div>{{ ad.city.name }}</div>
+    <div>{{ ad.category.name }}</div>
+
+    <h1>Seller Details</h1>
+    <div>{{ ad.contactName }}</div>
+    <div>{{ ad.contactPhone }}</div>
+    <div>{{ ad.contactEmail }}</div>
+{% endblock %}
+
