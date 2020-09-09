@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Service\Ad\AdServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,7 +35,7 @@ class AdminAdController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ads/{id}", name="show_candidate_ad")
+     * @Route("/admin/ads/{id}", name="show_candidate_ad", methods={"GET"})
      *
      * @param int $id
      * @return Response
@@ -44,5 +46,22 @@ class AdminAdController extends AbstractController
         return $this->render('admin/ad/viewCandidate.html.twig', [
             'ad' => $ad
         ]);
+    }
+
+    /**
+     * @Route("/admin/ads/{id}/approve", name="approve_candidate_ad", methods={"GET"})
+     *
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function approveCandidateAd(int $id) {
+        $ad = $this->adService->getById($id);
+
+        if (!$ad) {
+            return $this->redirectToRoute('list_waiting_ads');
+        }
+
+        $this->adService->updateStatusToApproved($ad);
+        return $this->redirectToRoute('list_waiting_ads');
     }
 }

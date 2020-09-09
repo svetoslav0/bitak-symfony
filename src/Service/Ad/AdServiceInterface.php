@@ -26,4 +26,10 @@ interface AdServiceInterface
      * @return Ad
      */
     public function getById(int $id): Ad;
+
+    /**
+     * @param Ad $ad
+     * @return bool
+     */
+    public function updateStatusToApproved(Ad $ad): bool;
 }

@@ -75,4 +75,13 @@ class AdService implements AdServiceInterface
     {
         return $this->adRepository->find($id);
     }
+
+    public function updateStatusToApproved(Ad $ad): bool
+    {
+        $statusApproved = $this->adStatusRepository
+            ->findOneBy(['name' => AdStatus::STATUS_APPROVED]);
+
+        $ad->setStatus($statusApproved);
+        return $this->adRepository->insert($ad);
+    }
 }
