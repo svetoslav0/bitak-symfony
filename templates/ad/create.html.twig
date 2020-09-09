@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.title) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.city) }}
+
+        {{ form_row(form.contactEmail) }}
+        {{ form_row(form.contactName) }}
+        {{ form_row(form.contactPhone) }}
+
+        <div class="button-container">
+            <button type="submit" class="main-button">Add ad!</button>
+        </div>
+        {{ form_row(form._token) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

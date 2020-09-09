@@ -131,7 +131,7 @@ class Ad
     /**
      * @return Category
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -147,7 +147,7 @@ class Ad
     /**
      * @return City
      */
-    public function getCity(): City
+    public function getCity(): ?City
     {
         return $this->city;
     }
@@ -163,7 +163,7 @@ class Ad
     /**
      * @return AdStatus
      */
-    public function getStatus(): AdStatus
+    public function getStatus(): ?AdStatus
     {
         return $this->status;
     }
