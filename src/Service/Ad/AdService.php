@@ -29,6 +29,10 @@ class AdService implements AdServiceInterface
         $this->adStatusRepository = $adStatusRepository;
     }
 
+    /**
+     * @param Ad $ad
+     * @return bool
+     */
     public function save(Ad $ad): bool
     {
         $statusWaiting = $this->adStatusRepository
@@ -36,5 +40,16 @@ class AdService implements AdServiceInterface
 
         $ad->setStatus($statusWaiting);
         return $this->adRepository->insert($ad);
+    }
+
+    /**
+     * @return Ad[]
+     */
+    public function getWaiting(): array
+    {
+        $statusWaiting = $this->adStatusRepository
+            ->findOneBy(['name' => AdStatus::STATUS_WAITING]);
+
+        return $this->adRepository->findBy(['status' => $statusWaiting]);
     }
 }

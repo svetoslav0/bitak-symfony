@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for ad in ads %}
+        <div>
+            <span>{{ ad.title }}</span> |
+            <span>{{ ad.city.name }}</span> |
+            <span>{{ ad.category.name }}</span>
+        </div>
+        <br />
+    {% endfor %}
+
+{% endblock %}
