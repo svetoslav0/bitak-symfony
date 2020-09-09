@@ -2,15 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\CityRepository;
+use App\Repository\AdStatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CityRepository::class)
+ * @ORM\Entity(repositoryClass=AdStatusRepository::class)
  */
-class City
+class AdStatus
 {
+
+    const STATUS_WAITING = 'STATUS_WAITING';
+    const STATUS_APPROVED = 'STATUS_APPROVED';
+    const STATUS_REJECTED = 'STATUS_REJECTED';
+    const STATUS_ARCHIVED = 'STATUS_ARCHIVED';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -26,7 +32,7 @@ class City
     /**
      * @var ArrayCollection|Ad[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="status")
      */
     private $ads;
 

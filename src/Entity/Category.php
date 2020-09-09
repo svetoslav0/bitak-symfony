@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,18 @@ class Category
      */
     private $name;
 
+    /**
+     * @var ArrayCollection|Ad[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="category")
+     */
+    private $ads;
+
+    public function __construct()
+    {
+        $this->ads = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,5 +50,21 @@ class Category
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return Ad[]|ArrayCollection
+     */
+    public function getAds()
+    {
+        return $this->ads;
+    }
+
+    /**
+     * @param Ad[]|ArrayCollection $ads
+     */
+    public function setAds($ads): void
+    {
+        $this->ads = $ads;
     }
 }
