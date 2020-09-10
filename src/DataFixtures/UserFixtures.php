@@ -28,8 +28,9 @@ class UserFixtures extends Fixture
         $user->setEmail(self::DEFAULT_USER);
         $user->setPassword($this->encoder->encodePassword($user, self::DEFAULT_PASSWORD));
         $user->setFullName(self::DEFAULT_NAME);
-        $manager->persist($user);
+        $user->addRole(User::ROLE_ADMIN);
 
+        $manager->persist($user);
         $manager->flush();
     }
 }

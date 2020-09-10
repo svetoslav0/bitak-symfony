@@ -10,7 +10,9 @@
         <h2>{{ ad.title }}</h2>
         <div>
             <strong>Category: </strong>
-            {{ ad.category.name }}
+            <a href="{{ path('ads_in_category', {id: ad.category.id}) }}">
+                {{ ad.category.name }}
+            </a>
         </div>
         <div>
             <strong>City: </strong>

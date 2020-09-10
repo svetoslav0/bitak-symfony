@@ -80,7 +80,7 @@ class AdController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('ad/show.html.twig', [
+        return $this->render('ad/showOne.html.twig', [
             'ad' => $ad
         ]);
     }

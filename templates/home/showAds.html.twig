@@ -11,7 +11,7 @@
     {% for category in categories %}
 
         <span>
-            | <a href="#">{{ category.name}}</a> |
+            | <a href="{{ path('ads_in_category', {id: category.id}) }}">{{ category.name}}</a> |
         </span>
 
     {% endfor %}
@@ -28,7 +28,11 @@
                 </a>
             </h2>
             <small>{{ ad.user.username }}</small>
-            <div>{{ ad.category.name }}</div>
+            <div>
+                <a href="{{ path('ads_in_category', {id: ad.category.id}) }}">
+                    {{ ad.category.name }}
+                </a>
+            </div>
             <p>{{ ad.shortDescription }}</p>
         <hr />
 

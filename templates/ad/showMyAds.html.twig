@@ -18,7 +18,9 @@
             {% endif %}
             <div>
                 <strong>Category: </strong>
-                {{ ad.category.name }}
+                <a href="{{ path('ads_in_category', {id: ad.category.id}) }}">
+                    {{ ad.category.name }}
+                </a>
             </div>
             <p>{{ ad.description }}</p>
             <div>

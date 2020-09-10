@@ -47,4 +47,11 @@ interface AdServiceInterface
      * @return Ad[]
      */
     public function getAdsForUser(UserInterface $user): array;
+
+    /**
+     * @param $categoryId
+     * @param string $status
+     * @return Ad[]
+     */
+    public function getAllForCategoryWithStatus($categoryId, string $status): array;
 }

@@ -8,6 +8,7 @@ use App\Entity\Ad;
 use App\Entity\AdStatus;
 use App\Repository\AdRepository;
 use App\Repository\AdStatusRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -28,14 +29,21 @@ class AdService implements AdServiceInterface
      */
     private $userRepository;
 
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
     public function __construct(
         AdRepository $adRepository,
         AdStatusRepository $adStatusRepository,
-        UserRepository $userRepository)
+        UserRepository $userRepository,
+        CategoryRepository $categoryRepository)
     {
         $this->adRepository = $adRepository;
         $this->adStatusRepository = $adStatusRepository;
         $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -112,6 +120,24 @@ class AdService implements AdServiceInterface
             ->findOneBy(['email' => $user->getUsername()]);
 
         $ads = $this->adRepository->findBy(['user' => $userEntity]);
+        return $this->buildAdsWithShortDescription($ads);
+    }
+
+    /**
+     * @param $categoryId
+     * @param string $status
+     * @return Ad[]
+     */
+    public function getAllForCategoryWithStatus($categoryId, string $status): array
+    {
+        $category = $this->categoryRepository->find($categoryId);
+        $status = $this->adStatusRepository->findBy(['name' => $status]);
+
+        $ads = $this->adRepository->findBy([
+            'category' => $category,
+            'status' => $status
+        ]);
+
         return $this->buildAdsWithShortDescription($ads);
     }
 
