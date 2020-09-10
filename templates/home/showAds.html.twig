@@ -6,9 +6,22 @@
 
 {% block body %}
 
+    <h1>All Categories</h1>
+
+    {% for category in categories %}
+
+        <span>
+            | <a href="#">{{ category.name}}</a> |
+        </span>
+
+    {% endfor %}
+    {#    TODO: Fix this margin    #}
+    <br />
+    <br />
+
+    <h1>Newest Ads</h1>
     {% for ad in ads %}
 
-        <div class="container">
             <h2>
                 <a href="{{ path('show_ad', {id: ad.id}) }}">
                     {{ ad.title }}
@@ -17,7 +30,6 @@
             <small>{{ ad.user.username }}</small>
             <div>{{ ad.category.name }}</div>
             <p>{{ ad.shortDescription }}</p>
-        </div>
         <hr />
 
     {% endfor %}

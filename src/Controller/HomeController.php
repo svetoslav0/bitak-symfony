@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AdStatus;
 use App\Service\Ad\AdServiceInterface;
+use App\Service\Category\CategoriesServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,9 +16,18 @@ class HomeController extends AbstractController
      */
     private $adService;
 
-    public function __construct(AdServiceInterface $adService)
+    /**
+     * @var CategoriesServiceInterface
+     */
+    private $categoryService;
+
+    public function __construct(
+        AdServiceInterface $adService,
+        CategoriesServiceInterface $categoriesService
+    )
     {
         $this->adService = $adService;
+        $this->categoryService = $categoriesService;
     }
 
     /**
@@ -26,9 +36,11 @@ class HomeController extends AbstractController
     public function home() {
         $ads = $this->adService
             ->getAdsWithStatus(AdStatus::STATUS_APPROVED);
+        $categories = $this->categoryService->getAll();
 
         return $this->render('home/showAds.html.twig', [
-            'ads' => $ads
+            'ads' => $ads,
+            'categories' => $categories
         ]);
     }
 
