@@ -23,6 +23,13 @@ interface AdServiceInterface
     public function getById(int $id): Ad;
 
     /**
+     * @param int $id
+     * @param string $status
+     * @return Ad
+     */
+    public function getByIdWithStatus(int $id, string $status): ?Ad;
+
+    /**
      * @param int $adId
      * @param string $status
      * @return bool

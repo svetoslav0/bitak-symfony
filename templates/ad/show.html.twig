@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>{{ ad.title }}</h2>
+        <div>
+            <strong>Category: </strong>
+            {{ ad.category.name }}
+        </div>
+        <div>
+            <strong>City: </strong>
+            {{ ad.city.name }}
+        </div>
+        <strong>Description:</strong>
+        <div>{{ ad.description }}</div>
+        <br />
+        <h3>Seller Contact Information</h3>
+        <div>{{ ad.contactName }}</div>
+        <div>{{ ad.contactEmail }}</div>
+        <div>{{ ad.contactPhone }}</div>
+    </div>
+
+{% endblock %}
+

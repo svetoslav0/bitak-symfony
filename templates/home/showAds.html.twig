@@ -8,8 +8,12 @@
 
     {% for ad in ads %}
 
-        <div>
-            <h2>{{ ad.title }}</h2>
+        <div class="container">
+            <h2>
+                <a href="{{ path('show_ad', {id: ad.id}) }}">
+                    {{ ad.title }}
+                </a>
+            </h2>
             <small>{{ ad.user.username }}</small>
             <div>{{ ad.category.name }}</div>
             <p>{{ ad.shortDescription }}</p>

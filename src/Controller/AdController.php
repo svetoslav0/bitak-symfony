@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\AdStatus;
 use App\Form\AdType;
 use App\Service\Ad\AdServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,5 +50,23 @@ class AdController extends AbstractController
         $this->adService->save($ad, $this->getUser());
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/ad/{id}", name="show_ad")
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function showAd($id) {
+        $ad = $this->adService->getByIdWithStatus(intval($id), AdStatus::STATUS_APPROVED);
+
+        if (!$ad) {
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('ad/show.html.twig', [
+            'ad' => $ad
+        ]);
     }
 }

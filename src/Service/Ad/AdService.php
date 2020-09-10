@@ -65,6 +65,16 @@ class AdService implements AdServiceInterface
         return $this->adRepository->find($id);
     }
 
+    public function getByIdWithStatus(int $id, string $status): ?Ad
+    {
+        $status = $this->adStatusRepository->findOneBy(['name' => $status]);
+
+        return $this->adRepository->findOneBy([
+            'id' => $id,
+            'status' => $status
+        ]);
+    }
+
     /**
      * @param int $adId
      * @param string $status
