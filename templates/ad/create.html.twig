@@ -9,8 +9,8 @@
         {{ form_row(form.description) }}
         {{ form_row(form.city) }}
 
-        {{ form_row(form.contactEmail) }}
-        {{ form_row(form.contactName) }}
+        {{ form_row(form.contactEmail, {'attr': {'value': app.user.email}}) }}
+        {{ form_row(form.contactName, {'attr': {'value': app.user.fullName}}) }}
         {{ form_row(form.contactPhone) }}
 
         <div class="button-container">

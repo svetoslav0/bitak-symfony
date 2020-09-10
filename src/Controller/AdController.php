@@ -6,6 +6,7 @@ use App\Entity\Ad;
 use App\Entity\AdStatus;
 use App\Form\AdType;
 use App\Service\Ad\AdServiceInterface;
+use App\Service\User\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +19,23 @@ class AdController extends AbstractController
      */
     private $adService;
 
-    public function __construct(AdServiceInterface $adService)
+    /**
+     * @var UserServiceInterface
+     */
+    private $userService;
+
+    /**
+     * AdController constructor.
+     * @param AdServiceInterface $adService
+     * @param UserServiceInterface $userService
+     */
+    public function __construct(
+        AdServiceInterface $adService,
+        UserServiceInterface $userService
+    )
     {
         $this->adService = $adService;
+        $this->userService = $userService;
     }
 
     /**
@@ -32,7 +47,7 @@ class AdController extends AbstractController
         $form = $this->createForm(AdType::class);
 
         return $this->render('ad/create.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
