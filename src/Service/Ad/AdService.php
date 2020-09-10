@@ -57,17 +57,6 @@ class AdService implements AdServiceInterface
     }
 
     /**
-     * @return Ad[]
-     */
-    public function getWaiting(): array
-    {
-        $statusWaiting = $this->adStatusRepository
-            ->findOneBy(['name' => AdStatus::STATUS_WAITING]);
-
-        return $this->adRepository->findBy(['status' => $statusWaiting]);
-    }
-
-    /**
      * @param int $id
      * @return Ad
      */
@@ -88,5 +77,33 @@ class AdService implements AdServiceInterface
 
         $ad->setStatus($status);
         return $this->adRepository->insertOrUpdate($ad);
+    }
+
+    /**
+     * @param string $status
+     * @return Ad[]
+     */
+    public function getAdsWithStatus(string $status): array
+    {
+        $adStatus = $this->adStatusRepository
+            ->findOneBy(['name' => $status]);
+
+        $ads = $this->adRepository->findBy(['status' => $adStatus]);
+
+        foreach ($ads as $ad) {
+            if (strlen($ad->getDescription()) >= Ad::MAX_SHORT_DESCRIPTION_LENGTH) {
+                $shortDescription = substr(
+                    $ad->getDescription(),
+                    0,
+                    Ad::MAX_SHORT_DESCRIPTION_LENGTH) . ' . . .';
+
+                $ad->setShortDescription($shortDescription);
+                continue;
+            }
+
+            $ad->setShortDescription($ad->getDescription());
+        }
+
+        return $ads;
     }
 }

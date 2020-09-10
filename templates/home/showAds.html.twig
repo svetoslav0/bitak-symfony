@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    {% for ad in ads %}
+
+        <div>
+            <h2>{{ ad.title }}</h2>
+            <small>{{ ad.user.username }}</small>
+            <div>{{ ad.category.name }}</div>
+            <p>{{ ad.shortDescription }}</p>
+        </div>
+        <hr />
+
+    {% endfor %}
+
+{% endblock %}
+

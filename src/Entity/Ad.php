@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ad
 {
+
+    const MAX_SHORT_DESCRIPTION_LENGTH = 120;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -26,6 +29,11 @@ class Ad
      * @ORM\Column(type="text")
      */
     private $description;
+
+    /**
+     * @var string
+     */
+    private $shortDescription;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -95,6 +103,18 @@ class Ad
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
 
         return $this;
     }

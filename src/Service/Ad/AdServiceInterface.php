@@ -5,7 +5,6 @@ namespace App\Service\Ad;
 
 
 use App\Entity\Ad;
-use App\Entity\AdStatus;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface AdServiceInterface
@@ -16,11 +15,6 @@ interface AdServiceInterface
      * @return bool
      */
     public function save(Ad $ad, UserInterface $user): bool;
-
-    /**
-     * @return Ad[]
-     */
-    public function getWaiting(): array;
 
     /**
      * @param int $id
@@ -34,4 +28,10 @@ interface AdServiceInterface
      * @return bool
      */
     public function updateAdStatus(int $adId, string $status): bool;
+
+    /**
+     * @param string $status
+     * @return Ad[]
+     */
+    public function getAdsWithStatus(string $status): array;
 }

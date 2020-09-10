@@ -28,7 +28,7 @@ class AdminAdController extends AbstractController
      * @return Response
      */
     public function listWaitingAds() {
-        $waitingAds = $this->adService->getWaiting();
+        $waitingAds = $this->adService->getAdsWithStatus(AdStatus::STATUS_WAITING);
 
         return $this->render('admin/ad/showWaiting.html.twig', [
             'ads' => $waitingAds

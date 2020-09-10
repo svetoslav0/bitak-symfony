@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\AdStatus;
+use App\Service\Ad\AdServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,11 +11,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @var AdServiceInterface
      */
-    public function index() {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+    private $adService;
+
+    public function __construct(AdServiceInterface $adService)
+    {
+        $this->adService = $adService;
+    }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home() {
+        $ads = $this->adService
+            ->getAdsWithStatus(AdStatus::STATUS_APPROVED);
+
+        return $this->render('home/showAds.html.twig', [
+            'ads' => $ads
         ]);
     }
 
