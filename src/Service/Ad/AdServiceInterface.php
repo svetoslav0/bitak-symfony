@@ -41,4 +41,10 @@ interface AdServiceInterface
      * @return Ad[]
      */
     public function getAdsWithStatus(string $status): array;
+
+    /**
+     * @param UserInterface $user
+     * @return Ad[]
+     */
+    public function getAdsForUser(UserInterface $user): array;
 }

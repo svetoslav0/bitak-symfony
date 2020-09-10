@@ -99,13 +99,33 @@ class AdService implements AdServiceInterface
             ->findOneBy(['name' => $status]);
 
         $ads = $this->adRepository->findBy(['status' => $adStatus]);
+        return $this->buildAdsWithShortDescription($ads);
+    }
 
+    /**
+     * @param UserInterface $user
+     * @return Ad[]
+     */
+    public function getAdsForUser(UserInterface $user): array
+    {
+        $userEntity = $this->userRepository
+            ->findOneBy(['email' => $user->getUsername()]);
+
+        $ads = $this->adRepository->findBy(['user' => $userEntity]);
+        return $this->buildAdsWithShortDescription($ads);
+    }
+
+    /**
+     * @param Ad[] $ads
+     * @return Ad[]
+     */
+    private function buildAdsWithShortDescription($ads) {
         foreach ($ads as $ad) {
             if (strlen($ad->getDescription()) >= Ad::MAX_SHORT_DESCRIPTION_LENGTH) {
                 $shortDescription = substr(
-                    $ad->getDescription(),
-                    0,
-                    Ad::MAX_SHORT_DESCRIPTION_LENGTH) . ' . . .';
+                        $ad->getDescription(),
+                        0,
+                        Ad::MAX_SHORT_DESCRIPTION_LENGTH) . ' . . .';
 
                 $ad->setShortDescription($shortDescription);
                 continue;

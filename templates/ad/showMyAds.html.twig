@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for ad in ads %}
+
+        <div class="container">
+            {% if ad.status.name == "STATUS_APPROVED" %}
+                <h2>
+                    <a href="{{ path('show_ad', {id: ad.id}) }}">
+                        {{ ad.title }}
+                    </a>
+                </h2>
+            {% else %}
+                <h2>
+                    {{ ad.title }}
+                </h2>
+            {% endif %}
+            <div>
+                <strong>Category: </strong>
+                {{ ad.category.name }}
+            </div>
+            <p>{{ ad.description }}</p>
+            <div>
+                <strong>Status:</strong>
+                {{ ad.status.name }}
+            </div>
+        </div>
+        <hr />
+
+    {% endfor %}
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

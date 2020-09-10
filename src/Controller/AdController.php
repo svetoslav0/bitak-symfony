@@ -69,4 +69,15 @@ class AdController extends AbstractController
             'ad' => $ad
         ]);
     }
+
+    /**
+     * @Route("/myads", name="show_user_ads")
+     */
+    public function showUserAds() {
+        $ads = $this->adService->getAdsForUser($this->getUser());
+
+        return $this->render('ad/showMyAds.html.twig', [
+            'ads' => $ads
+        ]);
+    }
 }
