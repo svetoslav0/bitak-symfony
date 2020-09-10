@@ -25,6 +25,10 @@
         <div>{{ ad.contactName }}</div>
         <div>{{ ad.contactEmail }}</div>
         <div>{{ ad.contactPhone }}</div>
+        {% if is_granted('ROLE_ADMIN') or (app.user and app.user.id == ad.user.id) %}
+            <button>Edit</button>
+            <button>Delete</button>
+        {% endif %}
     </div>
 
 {% endblock %}
