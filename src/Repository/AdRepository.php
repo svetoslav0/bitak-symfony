@@ -20,7 +20,7 @@ class AdRepository extends ServiceEntityRepository
         parent::__construct($registry, Ad::class);
     }
 
-    public function insert(Ad $ad): bool {
+    public function insertOrUpdate(Ad $ad): bool {
         $em = $this->getEntityManager();
 
         try {

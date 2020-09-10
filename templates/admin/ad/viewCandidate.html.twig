@@ -15,7 +15,9 @@
     <a href="{{ path('approve_candidate_ad', {id: ad.id}) }}">
         <button style="background-color: greenyellow" id="approve-btn">Approve</button>
     </a>
+    <a href="{{ path('reject_candidate_ad', {id: ad.id}) }}">
+        <button style="background-color: red; color: white" id="reject-btn">Reject</button>
+    </a>
 
-    <button style="background-color: red; color: white" id="reject-btn">Reject</button>
 {% endblock %}
 

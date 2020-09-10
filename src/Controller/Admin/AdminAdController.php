@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AdStatus;
 use App\Service\Ad\AdServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -55,13 +56,40 @@ class AdminAdController extends AbstractController
      * @return RedirectResponse
      */
     public function approveCandidateAd(int $id) {
+        return $this->updateAdStatus(
+            $id,
+            AdStatus::STATUS_APPROVED,
+            'list_waiting_ads'
+        );
+    }
+
+    /**
+     * @Route("/admin/ads/{id}/reject", name="reject_candidate_ad", methods={"GET"})
+     *
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function rejectCandidateAd(int $id) {
+        return $this->updateAdStatus(
+            $id,
+            AdStatus::STATUS_REJECTED,
+            'list_waiting_ads'
+        );
+    }
+
+    /**
+     * @param int $id
+     * @param string $status
+     * @param string $routeToRedirect
+     * @return RedirectResponse
+     */
+    private function updateAdStatus(int $id, string $status, string $routeToRedirect) {
         $ad = $this->adService->getById($id);
 
-        if (!$ad) {
-            return $this->redirectToRoute('list_waiting_ads');
+        if ($ad) {
+            $this->adService->updateAdStatus($id, $status);
         }
 
-        $this->adService->updateStatusToApproved($ad);
-        return $this->redirectToRoute('list_waiting_ads');
+        return $this->redirectToRoute($routeToRedirect);
     }
 }

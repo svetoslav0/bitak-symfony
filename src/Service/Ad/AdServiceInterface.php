@@ -5,6 +5,7 @@ namespace App\Service\Ad;
 
 
 use App\Entity\Ad;
+use App\Entity\AdStatus;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface AdServiceInterface
@@ -28,8 +29,9 @@ interface AdServiceInterface
     public function getById(int $id): Ad;
 
     /**
-     * @param Ad $ad
+     * @param int $adId
+     * @param string $status
      * @return bool
      */
-    public function updateStatusToApproved(Ad $ad): bool;
+    public function updateAdStatus(int $adId, string $status): bool;
 }

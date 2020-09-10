@@ -53,7 +53,7 @@ class AdService implements AdServiceInterface
         $ad->setStatus($statusWaiting);
         $ad->setUser($userEntity);
 
-        return $this->adRepository->insert($ad);
+        return $this->adRepository->insertOrUpdate($ad);
     }
 
     /**
@@ -76,12 +76,17 @@ class AdService implements AdServiceInterface
         return $this->adRepository->find($id);
     }
 
-    public function updateStatusToApproved(Ad $ad): bool
+    /**
+     * @param int $adId
+     * @param string $status
+     * @return bool
+     */
+    public function updateAdStatus(int $adId, string $status): bool
     {
-        $statusApproved = $this->adStatusRepository
-            ->findOneBy(['name' => AdStatus::STATUS_APPROVED]);
+        $ad = $this->adRepository->find($adId);
+        $status = $this->adStatusRepository->findOneBy(['name' => $status]);
 
-        $ad->setStatus($statusApproved);
-        return $this->adRepository->insert($ad);
+        $ad->setStatus($status);
+        return $this->adRepository->insertOrUpdate($ad);
     }
 }
