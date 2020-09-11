@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Entity\AdStatus;
+use App\Entity\User;
 use App\Form\AdType;
 use App\Service\Ad\AdServiceInterface;
 use App\Service\User\UserServiceInterface;
@@ -14,6 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdController extends AbstractController
 {
+    const SUCCESS_FLASH_TYPE = 'success';
+    const SUCCESSFULLY_DELETE_AD_MESSAGE = 'Ad was successfully deleted!';
+
     /**
      * @var AdServiceInterface
      */
@@ -94,5 +98,23 @@ class AdController extends AbstractController
         return $this->render('ad/showMyAds.html.twig', [
             'ads' => $ads
         ]);
+    }
+
+    /**
+     * @Route("/ad/{id}/delete", name="delete_ad")
+     *
+     * @param $id
+     * @return Response
+     */
+    public function deleteAd($id) {
+        if ($this->adService->isUserOwner($id, $this->getUser()) ||
+            in_array(User::ROLE_ADMIN, $this->getUser()->getRoles())
+        ) {
+            $this->addFlash(self::SUCCESS_FLASH_TYPE, self::SUCCESSFULLY_DELETE_AD_MESSAGE);
+            $this->adService->updateAdStatus($id, AdStatus::STATUS_ARCHIVED);
+        }
+
+
+        return $this->redirectToRoute('home');
     }
 }

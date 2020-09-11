@@ -34,6 +34,13 @@ class AdService implements AdServiceInterface
      */
     private $categoryRepository;
 
+    /**
+     * AdService constructor.
+     * @param AdRepository $adRepository
+     * @param AdStatusRepository $adStatusRepository
+     * @param UserRepository $userRepository
+     * @param CategoryRepository $categoryRepository
+     */
     public function __construct(
         AdRepository $adRepository,
         AdStatusRepository $adStatusRepository,
@@ -73,6 +80,11 @@ class AdService implements AdServiceInterface
         return $this->adRepository->find($id);
     }
 
+    /**
+     * @param int $id
+     * @param string $status
+     * @return Ad|null
+     */
     public function getByIdWithStatus(int $id, string $status): ?Ad
     {
         $status = $this->adStatusRepository->findOneBy(['name' => $status]);
@@ -139,6 +151,30 @@ class AdService implements AdServiceInterface
         ]);
 
         return $this->buildAdsWithShortDescription($ads);
+    }
+
+    /**
+     * @param $adId
+     * @param UserInterface|null $coreUser
+     * @return bool
+     */
+    public function isUserOwner($adId, ?UserInterface $coreUser): bool
+    {
+        if (!$coreUser) {
+            return false;
+        }
+
+        $user = $this->userRepository->findOneBy(['email' => $coreUser->getUsername()]);
+        $ad = $this->adRepository->findOneBy([
+            'user' => $user,
+            'id' => $adId
+        ]);
+
+        if (!$ad) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

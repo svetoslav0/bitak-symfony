@@ -54,4 +54,11 @@ interface AdServiceInterface
      * @return Ad[]
      */
     public function getAllForCategoryWithStatus($categoryId, string $status): array;
+
+    /**
+     * @param $adId
+     * @param UserInterface|null $user
+     * @return bool
+     */
+    public function isUserOwner($adId, ?UserInterface $user): bool;
 }

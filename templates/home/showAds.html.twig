@@ -6,6 +6,12 @@
 
 {% block body %}
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h1>All Categories</h1>
 
     {% for category in categories %}
