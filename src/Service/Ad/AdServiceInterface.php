@@ -5,6 +5,7 @@ namespace App\Service\Ad;
 
 
 use App\Entity\Ad;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface AdServiceInterface
@@ -17,10 +18,16 @@ interface AdServiceInterface
     public function save(Ad $ad, UserInterface $user): bool;
 
     /**
+     * @param Ad $ad
+     * @return bool
+     */
+    public function update(Ad $ad): bool;
+
+    /**
      * @param int $id
      * @return Ad
      */
-    public function getById(int $id): Ad;
+    public function getById(int $id): ?Ad;
 
     /**
      * @param int $id
@@ -61,4 +68,11 @@ interface AdServiceInterface
      * @return bool
      */
     public function isUserOwner($adId, ?UserInterface $user): bool;
+
+    /**
+     * @param Ad $ad
+     * @param FormInterface $form
+     * @return FormInterface
+     */
+    public function getEditFormWithData(Ad $ad, FormInterface $form): FormInterface;
 }

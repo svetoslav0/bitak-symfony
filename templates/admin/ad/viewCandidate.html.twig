@@ -12,11 +12,11 @@
     <div>{{ ad.contactName }}</div>
     <div>{{ ad.contactPhone }}</div>
     <div>{{ ad.contactEmail }}</div>
-    <a href="{{ path('approve_candidate_ad', {id: ad.id}) }}">
-        <button style="background-color: greenyellow" id="approve-btn">Approve</button>
+    <a href="{{ path('approve_candidate_ad', {id: ad.id}) }}" class="btn btn-success">
+        Approve
     </a>
-    <a href="{{ path('reject_candidate_ad', {id: ad.id}) }}">
-        <button style="background-color: red; color: white" id="reject-btn">Reject</button>
+    <a href="{{ path('reject_candidate_ad', {id: ad.id}) }}" class="btn btn-danger">
+        Reject
     </a>
 
 {% endblock %}

@@ -6,60 +6,67 @@
 
 {% block body %}
 
-    <div class="container">
-        <h2>{{ ad.title }}</h2>
-        <div>
-            <strong>Category: </strong>
-            <a href="{{ path('ads_in_category', {id: ad.category.id}) }}">
-                {{ ad.category.name }}
-            </a>
-        </div>
-        <div>
-            <strong>City: </strong>
-            {{ ad.city.name }}
-        </div>
-        <strong>Description:</strong>
-        <div>{{ ad.description }}</div>
-        <br />
-        <h3>Seller Contact Information</h3>
-        <div>{{ ad.contactName }}</div>
-        <div>{{ ad.contactEmail }}</div>
-        <div>{{ ad.contactPhone }}</div>
-        {% if is_granted('ROLE_ADMIN') or (app.user and app.user.id == ad.user.id) %}
-            <button class="btn btn-info">
-                Edit
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
             </button>
+        </div>
+    {% endfor %}
 
-            <!-- Delete button trigger modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                Delete
-            </button>
+    <h2>{{ ad.title }}</h2>
+    <div>
+        <strong>Category: </strong>
+        <a href="{{ path('ads_in_category', {id: ad.category.id}) }}">
+            {{ ad.category.name }}
+        </a>
+    </div>
+    <div>
+        <strong>City: </strong>
+        {{ ad.city.name }}
+    </div>
+    <strong>Description:</strong>
+    <div>{{ ad.description }}</div>
+    <br />
+    <h3>Seller Contact Information</h3>
+    <div>{{ ad.contactName }}</div>
+    <div>{{ ad.contactEmail }}</div>
+    <div>{{ ad.contactPhone }}</div>
+    {% if is_granted('ROLE_ADMIN') or (app.user and app.user.id == ad.user.id) %}
+        <a href="{{ path('edit_ad', {id: ad.id}) }}" class="btn btn-info">
+            Edit
+        </a>
 
-            <!-- Delete Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
-                                About to delete <strong>{{ ad.title }}</strong>
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to do this? The ad will not be actually deleted,
-                            but will not be visible anymore.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <a href="{{ path('delete_ad', {id: ad.id}) }}" type="button" class="btn btn-danger">Delete</a>
-                        </div>
+        <!-- Delete button trigger modal -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+            Delete
+        </button>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            About to delete <strong>{{ ad.title }}</strong>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to do this? The ad will not be actually deleted,
+                        but will not be visible anymore.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="{{ path('delete_ad', {id: ad.id}) }}" type="button" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 
 {% endblock %}
 

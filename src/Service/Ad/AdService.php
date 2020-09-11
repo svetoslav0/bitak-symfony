@@ -6,10 +6,12 @@ namespace App\Service\Ad;
 
 use App\Entity\Ad;
 use App\Entity\AdStatus;
+use App\Form\AdType;
 use App\Repository\AdRepository;
 use App\Repository\AdStatusRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdService implements AdServiceInterface
@@ -72,10 +74,19 @@ class AdService implements AdServiceInterface
     }
 
     /**
+     * @param Ad $ad
+     * @return bool
+     */
+    public function update(Ad $ad): bool
+    {
+        return $this->adRepository->insertOrUpdate($ad);
+    }
+
+    /**
      * @param int $id
      * @return Ad
      */
-    public function getById(int $id): Ad
+    public function getById(int $id): ?Ad
     {
         return $this->adRepository->find($id);
     }
@@ -175,6 +186,23 @@ class AdService implements AdServiceInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param Ad $ad
+     * @param FormInterface $form
+     * @return FormInterface
+     */
+    public function getEditFormWithData(Ad $ad, FormInterface $form): FormInterface {
+        $form->get('city')->setData($ad->getCity());
+        $form->get('title')->setData($ad->getTitle());
+        $form->get('category')->setData($ad->getCategory());
+        $form->get('description')->setData($ad->getDescription());
+        $form->get('contactName')->setData($ad->getContactName());
+        $form->get('contactEmail')->setData($ad->getContactEmail());
+        $form->get('contactPhone')->setData($ad->getContactPhone());
+
+        return $form;
     }
 
     /**

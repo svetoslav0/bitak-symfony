@@ -27,9 +27,9 @@
                 Status: {{ ad.status.name }}
             </strong>
         </div>
-        <button class="btn btn-info">
+        <a href="{{ path('edit_ad', {id: ad.id}) }}" class="btn btn-info">
             Edit
-        </button>
+        </a>
 
         <!-- Delete button trigger modal -->
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">

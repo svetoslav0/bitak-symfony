@@ -9,6 +9,7 @@ use App\Form\AdType;
 use App\Service\Ad\AdServiceInterface;
 use App\Service\User\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +20,10 @@ class AdController extends AbstractController
     const WARNING_FLASH_TYPE = 'warning';
 
     const SUCCESSFULLY_DELETE_AD_MESSAGE = 'Ad was successfully deleted!';
+    const SUCCESSFULLY_UPDATED_AD_MESSAGE = 'Ad was successfully updated!';
+
     const NO_EDIT_ACCESS_FLASH_MESSAGE = 'You have no access to edit this ad!';
+    const NOT_EXISTING_AD_MESSAGE = 'Ad does not exist';
 
     /**
      * @var AdServiceInterface
@@ -117,7 +121,41 @@ class AdController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('ad/edit.html.twig');
+        $ad = $this->adService->getById($id);
+        if (!$ad) {
+            $this->addFlash(self::WARNING_FLASH_TYPE, self::NOT_EXISTING_AD_MESSAGE);
+            return $this->redirectToRoute('home');
+        }
+
+        $form = $this->createForm(AdType::class);
+        $formWithData = $this->adService->getEditFormWithData($ad, $form);
+        return $this->render('ad/edit.html.twig', [
+            'form' => $formWithData->createView(),
+            'ad' => $ad
+        ]);
+    }
+
+    /**
+     * @Route("/ad/{id}/edit", name="edit_ad_process", methods={"POST"})
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function editAdProcess(Request $request, $id) {
+        // TODO: check for access
+        $ad = $this->adService->getById($id);
+        // TODO: check for existing ad
+
+        $form = $this->createForm(AdType::class, $ad);
+        $form->handleRequest($request);
+
+        $this->adService->update($ad);
+        $this->addFlash(self::SUCCESS_FLASH_TYPE, self::SUCCESSFULLY_UPDATED_AD_MESSAGE);
+
+        return $this->redirectToRoute('show_ad', [
+            'id' => $ad->getId()
+        ]);
     }
 
     /**
@@ -141,6 +179,9 @@ class AdController extends AbstractController
      */
     private function hasAccess($adId) {
         return $this->adService->isUserOwner($adId, $this->getUser()) ||
-            in_array(User::ROLE_ADMIN, $this->getUser()->getRoles());
+            (
+                $this->getUser() &&
+                in_array(User::ROLE_ADMIN, $this->getUser()->getRoles())
+            );
     }
 }
