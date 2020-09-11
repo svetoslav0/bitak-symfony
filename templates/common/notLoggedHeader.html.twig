@@ -1,15 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #AECD8B !important;">
-    <a class="navbar-brand" href="#">NotLoggedHeader(debug)</a>
+    <a href="{{ path('home') }}">
+        <img src="{{ asset('logo-cut.png') }}" alt="logo" height="50px" />
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{{ path('home') }}">Home</a>
-            <a class="nav-item nav-link" href="#">Features</a>
-            <a class="nav-item nav-link" href="#">Pricing</a>
-        </div>
-    </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
